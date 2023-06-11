@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Option {
     private byte optionNumber;
     private String optionName;
@@ -5,11 +7,12 @@ public class Option {
     private boolean optionAvailable;
     private String[] ingredients;
 
-    public Option(byte optionNumber, String optionName, double optionPrice, boolean optionAvailable) {
+    public Option(byte optionNumber, String optionName, double optionPrice, boolean optionAvailable, String[] ingredients) {
         this.optionNumber = optionNumber;
         this.optionName = optionName;
         this.optionPrice = optionPrice;
         this.optionAvailable = optionAvailable;
+        this.ingredients = ingredients;
     }
 
     public byte getOptionNumber() {
