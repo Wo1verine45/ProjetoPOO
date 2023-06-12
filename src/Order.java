@@ -1,16 +1,15 @@
 public class Order {
-    private final byte orderNumber = 1;
-    private Option[] options;
+    private String status;
 
-    public Order(Option[] options) {
-        this.options = options;
+    public Order(String status) {
+        this.status = status;
     }
 
-    public Option[] getOptions() {
-        return options;
+    public String getStatus() {
+        return status;
     }
 
-    public void setOptions(Option[] options) {
-        this.options = options;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

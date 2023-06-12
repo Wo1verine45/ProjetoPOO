@@ -16,5 +16,17 @@ public class Main {
         options[10] = new Option((byte)11, "Cerveja Lata", 9.99, false, new String[]{});
         options[11] = new Option((byte)12, "Drink", 14.99, true, new String[]{});
         menu.showMenu();
+        Client client1 = new Client((byte)1);
+        int[] temporaryOrders = client1.placeOrder();
+        int i = 0;
+        for (; i < temporaryOrders.length && temporaryOrders[i] != 0; i++);
+        int[] orders = new int[i];
+        for (int j = 0; j < temporaryOrders.length && temporaryOrders[j] != 0; j++) {
+            orders[j] = temporaryOrders[j];
+        }
+        for (int order : orders) {
+            System.out.println(order);
+        }
+
     }
 }
