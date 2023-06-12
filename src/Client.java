@@ -1,10 +1,11 @@
 import java.util.Scanner;
 
-public class Client{
+public class Client extends User{
     private byte tableNumber;
     private int[] orders = new int[100];
 
-    public Client(byte tableNumber) {
+    public Client(byte tableNumber, int id) {
+        super(id);
         this.tableNumber = tableNumber;
     }
 
@@ -16,12 +17,11 @@ public class Client{
         while (true) {
             if (i == 0) {
                 System.out.println("Para fazer pedidos, digite 1:");
-                option = scanner.nextInt();
             } else {
                 System.out.println("Para continuar fazendo pedidos, digite 1");
                 System.out.println("Para finalizar seu pedido, digite 0:");
-                option = scanner.nextInt();
             }
+            option = scanner.nextInt();
             if (option == 1) {
                 System.out.println("Selecione o número do seu pedido: ");
                 orderNumber = scanner.nextInt();
