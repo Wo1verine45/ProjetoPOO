@@ -1,14 +1,14 @@
 import java.util.Scanner;
 
-public class Client extends User{
+public class Client{
     private byte tableNumber;
     private int[] orders = new int[100];
 
-    public Client(byte tableNumber, int id) {
-        super(id);
+    public Client(byte tableNumber) {
         this.tableNumber = tableNumber;
     }
 
+    // TODO: permitir a personalização dos pedidos
     public int[] placeOrder() {
         Scanner scanner = new Scanner(System.in);
         int orderNumber = 0;
@@ -27,6 +27,11 @@ public class Client extends User{
                 orderNumber = scanner.nextInt();
                 while (orderNumber < 1 || orderNumber > 12) {
                     System.out.println("Número de pedido não existe!");
+                    System.out.println("Selecione o número do seu pedido: ");
+                    orderNumber = scanner.nextInt();
+                }
+                while (orderNumber == 3 || orderNumber == 7 || orderNumber == 10) {
+                    System.out.println("Número de pedido não disponível!");
                     System.out.println("Selecione o número do seu pedido: ");
                     orderNumber = scanner.nextInt();
                 }

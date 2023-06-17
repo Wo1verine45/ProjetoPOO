@@ -1,6 +1,7 @@
 public class Main {
     public static void main(String[] args) {
 
+        // Cria o menu:
         Option[] options = new Option[12];
         Menu menu = new Menu(options);
         options[0] = new Option((byte)1, "X-Burguer", 19.99, true, new String[]{"Pão", "Carne", "Queijo"});
@@ -16,52 +17,64 @@ public class Main {
         options[10] = new Option((byte)11, "Suco Natural", 8.99, true, new String[]{});
         options[11] = new Option((byte)12, "Drink", 14.99, true, new String[]{});
         menu.showMenu();
-        Client client1 = new Client((byte)1, 0);
+
+        // Faz o pedido:
+        Client client1 = new Client((byte)1);
         int[] temporaryOrders = client1.placeOrder();
+
+        // Conta quantos pedidos têm
         int i = 0;
-        // conta quantos pedidos tem
         for (; i < temporaryOrders.length && temporaryOrders[i] != 0; i++);
-        int needPrepareNumber = 0;
-        int needPrepareBarmanNumber = 0;
-        int noPrepareNumber = 0;
+
+        // Passa o número dos pedidos para classe orders
         Order[] orders = new Order[i];
-        // passa o número dos pedidos pra classe orders e ve quantos precisam de preparo ou n
         for (int k = 0; k < i; k++) {
             orders[k] = new Order(temporaryOrders[k]);
-            if (temporaryOrders[k] >= 1 && temporaryOrders[k] <= 7) {
-                needPrepareNumber++;
-            } else if (temporaryOrders[k] >= 11 && temporaryOrders[k] <= 12) {
-                needPrepareBarmanNumber++;
-            } else {
-                noPrepareNumber++;
-            }
         }
-        Waiter[] waiters = new Waiter[i];
-        Cook[] cooks = new Cook[needPrepareNumber];
-        // vai mudar os status
-        for (int a = 0; a < i;) {
-            for (int cookNumber = 0; temporaryOrders[a] >= 1 && temporaryOrders[a] <= 7; cookNumber++, a++) {
-                cooks[cookNumber] = new Cook(orders[a], 2);
-                waiters[a] = new Waiter(orders[a], 2);
-                System.out.println("Status Atual: " + orders[a].getStatus());
-                waiters[a].sendToCook();
-                System.out.println("Status Atual: " + orders[a].getStatus());
-                cooks[cookNumber].cook();
-                System.out.println("Status Atual: " + orders[a].getStatus());
-                waiters[a].deliver();
-                System.out.println("Status Atual: " + orders[a].getStatus());
-                client1.pay(orders[a]);
-                System.out.println("Status Atual: " + orders[a].getStatus());
-            }
-            a++;
-            /*
-            for (temporaryOrders[a] >= 11 && temporaryOrders[a] <= 12) {
-                needPrepareBarmanNumber++;
-            } else {
-                noPrepareNumber++;
-            }
-             */
 
+        // Cria os funcionários:
+        Waiter waiter = new Waiter();
+        Cook cook = new Cook();
+        Barman barman = new Barman();
+        Cashier cashier = new Cashier();
+
+        // Vai mudar os status para os primeiros (Em preparo ou pendente), com o garçom mandando os pedidos pra o cozinheiro,
+        // para o barman ou indo buscar a bebida na geladeira
+        // TODO: mostrar os detalhes dos pedidos
+        for (int a = 0; a < i; a++) {
+            if (orders[a].getOrderNumber() >= 1 && orders[a].getOrderNumber() <= 7) {
+                waiter.changeStatus(orders[a]);
+            } else if (orders[a].getOrderNumber() >= 8 && orders[a].getOrderNumber() <= 10) {
+                waiter.changeStatus(orders[a]);
+            } else {
+                waiter.changeStatus(orders[a]);
+            }
+            System.out.println("Status do " + options[(orders[a].getOrderNumber()) - 1].getOptionName() + " da mesa " + client1.getTableNumber() +": " + orders[a].getStatus());
+        }
+        System.out.println();
+
+        // Vai mudar os status para os próximos (pronto), com o cozinheiro e o barman preparando os pedidos
+        for (int b = 0; b < i; b++) {
+            if (orders[b].getOrderNumber() >= 1 && orders[b].getOrderNumber() <= 7) {
+                cook.changeStatus(orders[b]);
+            } else if (orders[b].getOrderNumber() >= 11 && orders[b].getOrderNumber() <= 12) {
+                barman.changeStatus(orders[b]);
+            }
+            System.out.println("Status do " + options[(orders[b].getOrderNumber()) - 1].getOptionName() + " da mesa " + client1.getTableNumber() +": " + orders[b].getStatus());
+        }
+        System.out.println();
+
+        // Muda os status para entregue, com o garçom entregando o pedido inteiro junto
+        for (int c = 0; c < i; c++) {
+            waiter.changeStatus(orders[c]);
+            System.out.println("Status do " + options[(orders[c].getOrderNumber()) - 1].getOptionName() + " da mesa " + client1.getTableNumber() +": " + orders[c].getStatus());
+        }
+        System.out.println();
+
+        // Muda os status para Mesa Disponpivel novamente, pois o cliente já pagou
+        for (int d = 0; d < i; d++) {
+            cashier.changeStatus(orders[d]);
+            System.out.println("Status do " + options[(orders[d].getOrderNumber()) - 1].getOptionName() + " da mesa " + client1.getTableNumber() +": " + orders[d].getStatus());
         }
     }
 }
