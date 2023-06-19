@@ -5,7 +5,7 @@ public class Cashier extends User{
     @Override
     public void changeStatus(Order order) {
         if (Objects.equals(order.getStatus(), "Entregue")) {
-            order.setStatus("Mesa Disponível");
+            order.setStatus("Pago");
         }
     }
 }

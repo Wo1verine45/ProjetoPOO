@@ -8,8 +8,12 @@ public class Waiter extends User{
             order.setStatus("Em Preparo");
         } else if (Objects.equals(order.getStatus(), "Mesa Disponível") && order.getOrderNumber() >= 8 && order.getOrderNumber() <= 10) {
             order.setStatus("Pendente");
-        } else {
+        } else if (Objects.equals(order.getStatus(), "Pronto")) {
             order.setStatus("Entregue");
+        } else if (Objects.equals(order.getStatus(), "Pendente")) {
+            order.setStatus("Entregue");
+        } else if (Objects.equals(order.getStatus(), "Pago")){
+            order.setStatus("Mesa Disponível");
         }
     }
 }

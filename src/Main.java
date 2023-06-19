@@ -11,7 +11,7 @@ public class Main {
         options[4] = new Option((byte)5, "Batata Frita", 9.99, true, new String[]{});
         options[5] = new Option((byte)6, "Nuggets(x10)", 14.99, true, new String[]{});
         options[6] = new Option((byte)7, "Batata Chips", 12.99, false, new String[]{});
-        options[7] = new Option((byte)8, "Refrigerante Lata", 7.99, true, new String[]{});
+        options[7] = new Option((byte)8, "Coca-Cola", 7.99, true, new String[]{});
         options[8] = new Option((byte)9, "Suco Caixinha", 4.99, true, new String[]{});
         options[9] = new Option((byte)10, "Cerveja Lata", 9.99, false, new String[]{});
         options[10] = new Option((byte)11, "Suco Natural", 8.99, true, new String[]{});
@@ -40,7 +40,6 @@ public class Main {
 
         // Vai mudar os status para os primeiros (Em preparo ou pendente), com o garçom mandando os pedidos pra o cozinheiro,
         // para o barman ou indo buscar a bebida na geladeira
-        // TODO: mostrar os detalhes dos pedidos
         for (int a = 0; a < i; a++) {
             if (orders[a].getOrderNumber() >= 1 && orders[a].getOrderNumber() <= 7) {
                 waiter.changeStatus(orders[a]);
@@ -49,7 +48,15 @@ public class Main {
             } else {
                 waiter.changeStatus(orders[a]);
             }
-            System.out.println("Status do " + options[(orders[a].getOrderNumber()) - 1].getOptionName() + " da mesa " + client1.getTableNumber() +": " + orders[a].getStatus());
+            System.out.print("Status do(a) " + options[(orders[a].getOrderNumber()) - 1].getOptionName());
+            if (client1.getPersonalization()[a] == 1) {
+                System.out.print(" (Mal Passada)");
+            } else if (client1.getPersonalization()[a] == 2) {
+                System.out.print(" (Ao Ponto)");
+            } else if (client1.getPersonalization()[a] == 3) {
+                System.out.print(" (Bem Passado)");
+            }
+            System.out.println(" da mesa " + client1.getTableNumber() +": " + orders[a].getStatus());
         }
         System.out.println();
 
@@ -60,21 +67,52 @@ public class Main {
             } else if (orders[b].getOrderNumber() >= 11 && orders[b].getOrderNumber() <= 12) {
                 barman.changeStatus(orders[b]);
             }
-            System.out.println("Status do " + options[(orders[b].getOrderNumber()) - 1].getOptionName() + " da mesa " + client1.getTableNumber() +": " + orders[b].getStatus());
+            System.out.print("Status do(a) " + options[(orders[b].getOrderNumber()) - 1].getOptionName());
+            if (client1.getPersonalization()[b] == 1) {
+                System.out.print(" (Mal Passada)");
+            } else if (client1.getPersonalization()[b] == 2) {
+                System.out.print(" (Ao Ponto)");
+            } else if (client1.getPersonalization()[b] == 3) {
+                System.out.print(" (Bem Passado)");
+            }
+            System.out.println(" da mesa " + client1.getTableNumber() +": " + orders[b].getStatus());
         }
         System.out.println();
 
         // Muda os status para entregue, com o garçom entregando o pedido inteiro junto
         for (int c = 0; c < i; c++) {
             waiter.changeStatus(orders[c]);
-            System.out.println("Status do " + options[(orders[c].getOrderNumber()) - 1].getOptionName() + " da mesa " + client1.getTableNumber() +": " + orders[c].getStatus());
+            System.out.print("Status do(a) " + options[(orders[c].getOrderNumber()) - 1].getOptionName());
+            if (client1.getPersonalization()[c] == 1) {
+                System.out.print(" (Mal Passada)");
+            } else if (client1.getPersonalization()[c] == 2) {
+                System.out.print(" (Ao Ponto)");
+            } else if (client1.getPersonalization()[c] == 3) {
+                System.out.print(" (Bem Passado)");
+            }
+            System.out.println(" da mesa " + client1.getTableNumber() +": " + orders[c].getStatus());
         }
         System.out.println();
 
-        // Muda os status para Mesa Disponpivel novamente, pois o cliente já pagou
+        // Muda os status para Pago, pois o cliente já pagou
         for (int d = 0; d < i; d++) {
             cashier.changeStatus(orders[d]);
-            System.out.println("Status do " + options[(orders[d].getOrderNumber()) - 1].getOptionName() + " da mesa " + client1.getTableNumber() +": " + orders[d].getStatus());
+            System.out.print("Status do(a) " + options[(orders[d].getOrderNumber()) - 1].getOptionName());
+            if (client1.getPersonalization()[d] == 1) {
+                System.out.print(" (Mal Passada)");
+            } else if (client1.getPersonalization()[d] == 2) {
+                System.out.print(" (Ao Ponto)");
+            } else if (client1.getPersonalization()[d] == 3) {
+                System.out.print(" (Bem Passado)");
+            }
+            System.out.println(" da mesa " + client1.getTableNumber() +": " + orders[d].getStatus());
         }
+        System.out.println();
+
+        // Muda os status para Mesa Disponível
+        for (int e = 0; e < i; e++) {
+            waiter.changeStatus(orders[e]);
+        }
+        System.out.println("Status da mesa " + client1.getTableNumber() +": " + orders[0].getStatus());
     }
 }

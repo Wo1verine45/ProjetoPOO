@@ -3,15 +3,16 @@ import java.util.Scanner;
 public class Client{
     private byte tableNumber;
     private int[] orders = new int[100];
+    private int[] personalization = new int[100];
 
     public Client(byte tableNumber) {
         this.tableNumber = tableNumber;
     }
 
-    // TODO: permitir a personalização dos pedidos
     public int[] placeOrder() {
         Scanner scanner = new Scanner(System.in);
         int orderNumber = 0;
+        int p;
         int option;
         int i = 0;
         while (true) {
@@ -34,6 +35,22 @@ public class Client{
                     System.out.println("Número de pedido não disponível!");
                     System.out.println("Selecione o número do seu pedido: ");
                     orderNumber = scanner.nextInt();
+                }
+                if (orderNumber >= 1 && orderNumber <= 4) {
+                    System.out.println("Escolha o ponto da carne: ");
+                    System.out.println("Mal passado, digite 1 ");
+                    System.out.println("Ao ponto, digite 2 ");
+                    System.out.println("Bem passado, digite 3: ");
+                    p = scanner.nextInt();
+                    while (p < 1 || p > 3) {
+                        System.out.println("Número inválido!");
+                        System.out.println("Escolha o ponto da carne: ");
+                        System.out.println("Mal passado, digite 1 ");
+                        System.out.println("Ao ponto, digite 2 ");
+                        System.out.println("Bem passado, digite 3: ");
+                        p = scanner.nextInt();
+                    }
+                    personalization[i] = p;
                 }
                 orders[i] = orderNumber;
                 i++;
@@ -61,5 +78,13 @@ public class Client{
 
     public void setOrders(int[] orders) {
         this.orders = orders;
+    }
+
+    public void setPersonalization(int[] personalization) {
+        this.personalization = personalization;
+    }
+
+    public int[] getPersonalization() {
+        return personalization;
     }
 }
