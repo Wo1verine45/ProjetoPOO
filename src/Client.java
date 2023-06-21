@@ -26,15 +26,16 @@ public class Client{
             if (option == 1) {
                 System.out.println("Selecione o número do seu pedido: ");
                 orderNumber = scanner.nextInt();
-                while (orderNumber < 1 || orderNumber > 12) {
-                    System.out.println("Número de pedido não existe!");
-                    System.out.println("Selecione o número do seu pedido: ");
-                    orderNumber = scanner.nextInt();
-                }
-                while (orderNumber == 3 || orderNumber == 7 || orderNumber == 10) {
-                    System.out.println("Número de pedido não disponível!");
-                    System.out.println("Selecione o número do seu pedido: ");
-                    orderNumber = scanner.nextInt();
+                while (orderNumber < 1 || orderNumber > 12 || orderNumber == 3 || orderNumber == 7 || orderNumber == 10) {
+                    if (orderNumber == 3 || orderNumber == 7 || orderNumber == 10) {
+                        System.out.println("Número de pedido não disponível!");
+                        System.out.println("Selecione o número do seu pedido: ");
+                        orderNumber = scanner.nextInt();
+                    } else {
+                        System.out.println("Número de pedido não existe!");
+                        System.out.println("Selecione o número do seu pedido: ");
+                        orderNumber = scanner.nextInt();
+                    }
                 }
                 if (orderNumber >= 1 && orderNumber <= 4) {
                     System.out.println("Escolha o ponto da carne: ");
